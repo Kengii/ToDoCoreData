@@ -74,12 +74,12 @@ class MainToDoTVC: UITableViewController {
             if let name = mainToDo[indexPath.row].name {
                 let request: NSFetchRequest<MainToDo> = MainToDo.fetchRequest()
                 request.predicate = NSPredicate(format: "name==\(name)")
-                
+
                 if let mainToDo = try? context.fetch(request) {
                     for toDo in mainToDo {
                         context.delete(toDo)
                     }
-                    
+
                     self.mainToDo.remove(at: indexPath.row)
                     saveMainToDo()
                 }
@@ -108,7 +108,7 @@ class MainToDoTVC: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let taskTVC = segue.destination as? TaskTVC,
-           let indexPath = tableView.indexPathForSelectedRow {
+            let indexPath = tableView.indexPathForSelectedRow {
             taskTVC.chosenMainToDo = mainToDo[indexPath.row]
         }
     }
