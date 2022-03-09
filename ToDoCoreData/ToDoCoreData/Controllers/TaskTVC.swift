@@ -29,7 +29,7 @@ class TaskTVC: UITableViewController {
         alertC.addTextField { textFieald in
             textFieald.placeholder = "AddTask"
         }
-        
+
         let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] textField in
             if let textField = alertC.textFields?.first,
                 let text = textField.text, text != "",
@@ -95,7 +95,7 @@ class TaskTVC: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         let elementToMove = tasks[fromIndexPath.row]
         tasks.remove(at: fromIndexPath.row)
@@ -105,18 +105,18 @@ class TaskTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
+
     // MARK: - Table view delegate
-  
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         let done = tasks[indexPath.row]
         done.done.toggle()
-            tableView.reloadData()
+        tableView.reloadData()
     }
 
     // MARK: - Core Data
-    
+
     private func saveTask() {
         do {
             try context.save()
@@ -129,11 +129,11 @@ class TaskTVC: UITableViewController {
 
         guard let name = chosenMainToDo?.name else { return }
         let mainToDoPredicate = NSPredicate(format: "mainToDo.name MATCHES %@", name)
-        
+
         if let predicate = predicate {
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, mainToDoPredicate])
         } else {
-        request.predicate = mainToDoPredicate
+            request.predicate = mainToDoPredicate
         }
         do {
             tasks = try context.fetch(request)
